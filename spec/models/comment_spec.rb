@@ -22,5 +22,18 @@
 require "rails_helper"
 
 RSpec.describe Comment, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "content が記述されているとき" do
+    it "コメントは送れる" do
+      comment = build(:comment)
+      expect(comment).to be_valid
+    end
+  end
+
+  context "content が記述されていないとき" do
+    it "コメントは送れる" do
+      comment = build(:comment, content: nil)
+      expect(comment).to be_invalid
+      expect(comment.errors.details[:content][0][:error]).to eq :blank
+    end
+  end
 end
