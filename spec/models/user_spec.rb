@@ -32,5 +32,18 @@
 require "rails_helper"
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "name を指定しているとき" do
+    it "ユーザーが作成される" do
+      user = build(:user)
+      expect(user).to be_valid
+    end
+  end
+
+  context "name を指定していないとき" do
+    it "ユーザーは作成されない" do
+      user = build(:user, name: nil)
+      expect(user).to be_invalid
+      expect(user.errors.details[:name][0][:error]).to eq :blank
+    end
+  end
 end
